@@ -10,17 +10,17 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copiar o arquivo .csproj e restaurar as dependências
-COPY ["WebApplication4.csproj", "./"]
-RUN dotnet restore "./WebApplication4.csproj"
+COPY WebApplication4.csproj .
+RUN dotnet restore "WebApplication4.csproj"
 
 # Copiar todo o código-fonte e compilar a aplicação
 COPY . .
-RUN dotnet build "./WebApplication4.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "WebApplication4.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Fase de publicação do projeto
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./WebApplication4.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "WebApplication4.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Fase final onde a aplicação é preparada para execução
 FROM base AS final
