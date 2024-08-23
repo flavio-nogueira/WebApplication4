@@ -7,11 +7,11 @@ EXPOSE 8081
 # Fase de build e restore usando o SDK .NET 8.0
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
+WORKDIR /var/www/AspnetCore/teste/
 COPY ["WebApplication4.csproj", "./"]
-RUN dotnet restore "../WebApplication4.csproj"
+RUN dotnet restore "./WebApplication4.csproj"
 COPY . .
-RUN dotnet build "../WebApplication4.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./WebApplication4.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Fase de publicação do projeto
 FROM build AS publish
