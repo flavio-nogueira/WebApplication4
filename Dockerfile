@@ -9,12 +9,14 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copiar o arquivo .csproj e restaurar as dependências
-COPY WebApplication4.csproj .
+# Copiar apenas o arquivo .csproj e restaurar as dependências
+COPY WebApplication4.csproj ./
 RUN dotnet restore "WebApplication4.csproj"
 
-# Copiar todo o código-fonte e compilar a aplicação
-COPY . .
+# Copiar todo o código-fonte para o contêiner
+COPY . . 
+
+# Compilar a aplicação
 RUN dotnet build "WebApplication4.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Fase de publicação do projeto
